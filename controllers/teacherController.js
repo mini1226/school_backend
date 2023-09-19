@@ -50,6 +50,25 @@ const TeacherController = {
             res.status(200).json({ success: true, message: 'Teacher updated successfully.' });
         });
     },
+
+
+    deleteTeacher: function (req, res) {
+        const id = req.params.id;
+        Teacher.deleteTeacher(id, function (err, result) {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ success: false, message: 'Error deleting teacher.' });
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ success: false, message: 'Teacher not found.' });
+            }
+            res.status(200).json({ success: true, message: 'Teacher deleted successfully.' });
+        });
+    },
+
+
+
+
 };
 
 module.exports = TeacherController;

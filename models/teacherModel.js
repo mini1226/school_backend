@@ -27,6 +27,11 @@ const Teacher = {
             [updatedTeacher.FirstName, updatedTeacher.LastName, updatedTeacher.Email, updatedTeacher.Phone, updatedTeacher.SubjectID, id],
             callback);
     },
+
+    deleteTeacher: function (id, callback) {
+        db.query('DELETE FROM Teachers WHERE TeacherID = ?', [id], callback);
+    },
+
 };
 
 module.exports = Teacher;
