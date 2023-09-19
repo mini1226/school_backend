@@ -6,7 +6,14 @@ const Teacher = {
     },
 
     getTeacherById: function (id, callback) {
-        db.query('SELECT * FROM Teachers WHERE TeacherID = ?', [id], callback);
+        db.query(
+            'SELECT t.*, s.SubjectName ' +
+            'FROM Teachers t ' +
+            'LEFT JOIN Subjects s ON t.SubjectID = s.SubjectID ' +
+            'WHERE t.TeacherID = ?',
+            [id],
+            callback
+        );
     },
 
     createTeacher: function (newTeacher, callback) {

@@ -6,8 +6,17 @@ const Subject = {
     },
 
     getSubjectById: function (id, callback) {
-        db.query('SELECT * FROM Subjects WHERE SubjectID = ?', [id], callback);
+        db.query(
+            'SELECT s.*, GROUP_CONCAT(t.FirstName, " ", t.LastName) AS Teachers ' +
+            'FROM Subjects s ' +
+            'LEFT JOIN Teachers t ON s.SubjectID = t.SubjectID ' +
+            'WHERE s.SubjectID = ? ' +
+            'GROUP BY s.SubjectID',
+            [id],
+            callback
+        );
     },
+
 
     createSubject: function (newSubject, callback) {
         db.query('INSERT INTO Subjects (SubjectName, Description) VALUES (?, ?)', [newSubject.SubjectName, newSubject.Description], callback);
